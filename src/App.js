@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import ImageCropContainer from './container/ImageCropContainer';
+import ImageUpload from './components/ImageUpload';
 
 function App() {
   return (
     <div className="App">
-      <ImageCropContainer />
+      <ImageUpload />
     </div>
   );
 }
