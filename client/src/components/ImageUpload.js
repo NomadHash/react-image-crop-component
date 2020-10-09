@@ -8,6 +8,7 @@ const ImageUpload = () => {
   const [avatar, setAvatar] = useState({
     default: defaultAvatar,
   });
+
   return (
     <Background>
       <div

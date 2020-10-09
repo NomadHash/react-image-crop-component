@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageCrop from '../components/ImageCrop';
+import Axios from 'axios';
 
 const ImageCropContainer = () => {
   const [uploadUi, setUploadUI] = useState();
   const CreateUi = () => {
     setUploadUI(true);
   };
+
+  useEffect(() => {
+    Axios.get('/api/upload').then((res) => {
+      console.log(res.data);
+    });
+  }, []);
+
   return (
     <div>
       {uploadUi && <span>Crop your new profile picture</span>}
