@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ImageCropContainer from '../container/ImageCropContainer';
+import UploadTab from '../components/UploadTab';
 import defaultAvatar from '../public/default.png';
 import { RiPencilLine } from 'react-icons/ri';
 
@@ -8,6 +8,11 @@ const ImageUpload = () => {
   const [avatar, setAvatar] = useState({
     default: defaultAvatar,
   });
+  const [active, setActive] = useState(false);
+
+  const EditHandler = () => {
+    setActive(!active);
+  };
 
   return (
     <Background>
@@ -20,10 +25,11 @@ const ImageUpload = () => {
       >
         <H3>Profile picture</H3>
         <Preview src={avatar.default} alt="profileImagie"></Preview>
-        <EditBtn>
+        <EditBtn onClick={EditHandler}>
           <RiPencilLine style={{ fontSize: '18px' }} /> Edit
         </EditBtn>
-        <ImageCropContainer />
+        {active && <UploadTab EditHandler={EditHandler} />}
+        {/* <ImageCropContainer /> */}
       </div>
     </Background>
   );

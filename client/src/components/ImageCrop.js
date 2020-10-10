@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
+import style from 'styled-components';
 import 'react-image-crop/dist/ReactCrop.css';
 class ImageCrop extends PureComponent {
   state = {
@@ -24,7 +25,6 @@ class ImageCrop extends PureComponent {
     }
   };
 
-  // If you setState the crop in here you should return false.
   onImageLoaded = (image) => {
     this.imageRef = image;
   };
@@ -34,8 +34,6 @@ class ImageCrop extends PureComponent {
   };
 
   onCropChange = (crop, percentCrop) => {
-    // You could also use percentCrop:
-    // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
 
@@ -90,7 +88,14 @@ class ImageCrop extends PureComponent {
     return (
       <>
         <div>
-          <input type="file" accept="image/*" onChange={this.onSelectFile} />
+          <UploadBtn htmlFor="ex_file">Upload a photo...</UploadBtn>
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            id="ex_file"
+            accept="image/*"
+            onChange={this.onSelectFile}
+          ></input>
         </div>
         <div>
           {src && (
@@ -111,4 +116,25 @@ class ImageCrop extends PureComponent {
     );
   }
 }
+
+const UploadBtn = style.label`
+    font-family: inherit;
+    border: none;
+    font-weight: 500;
+    background: none;
+    width: 100%;
+    text-align: left;
+    color: #333333;
+    font-size: 14px;
+    padding: 4px 10px;
+    cursor : pointer;
+   &:hover {
+     background-color: #0064d4;
+      color: white;
+   }
+   &:focus {
+     outline:none;
+   }
+      
+      `;
 export default ImageCrop;
