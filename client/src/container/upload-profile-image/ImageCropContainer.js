@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ImageCrop from '../../components/upload-profile-img/ImageCrop';
-import style from 'styled-components';
-import Axios from 'axios';
+import { uploadState } from '../../modules/profileImageUpload';
 
 const ImageCropContainer = () => {
   const [uploadUi, setUploadUI] = useState();
+  const [cropSrc, setCropSrc] = useState();
+
+  const dispatch = useDispatch();
+
   const CreateUi = () => {
     console.log('업로드 완료');
     setUploadUI(true);
   };
 
-  // useEffect(() => {
-  //   Axios.get('/api/upload').then((res) => {
-  //     console.log(res.data);
-  //   });
-  // }, []);
+  const updateCropSrc = (src) => {
+    setCropSrc(src);
+  };
+  // console.log(cropSrc && cropSrc);
+
+  useEffect(() => {
+    if (cropSrc !== undefined) dispatch(uploadState(cropSrc));
+  }, [cropSrc]);
 
   return (
     <div>
-      <ImageCrop CreateUi={CreateUi} />
+      <ImageCrop CreateUi={CreateUi} updateCropSrc={updateCropSrc} />
     </div>
   );
 };

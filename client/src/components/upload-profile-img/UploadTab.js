@@ -7,24 +7,10 @@ function UploadTab({ EditHandler }) {
   UploadTab.handleClickOutside = () => EditHandler();
   return (
     <ButtonList>
-      <Square></Square>
       <ImageCropContainer />
     </ButtonList>
   );
 }
-
-const Square = style.span`
-display: block;
-    height: 8px;
-    width: 8px;
-    background: white;
-    position: absolute;
-    bottom: 57px;
-    border-right: 1px solid #d0d0d0;
-    border-top: 1px solid #d0d0d0;
-    transform: rotateZ(-45deg);
-    right: 107px;
-    `;
 
 const ButtonList = style.div`
 height: 43px;
@@ -32,7 +18,7 @@ height: 43px;
     display: flex;
     position: absolute;
     flex-direction: column;
-    border: 1.5px solid #cac9c9;
+    // border: 1.5px solid #cac9c9;
     padding: 8px 0px;
     border-radius: 6px;
     align-items: flex-start;

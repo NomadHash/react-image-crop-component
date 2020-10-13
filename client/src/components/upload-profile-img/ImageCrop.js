@@ -11,6 +11,7 @@ class ImageCrop extends PureComponent {
       width: 30,
       aspect: 5 / 5,
     },
+    cropSrc: null,
   };
 
   onSelectFile = (e) => {
@@ -43,9 +44,17 @@ class ImageCrop extends PureComponent {
         crop,
         'newFile.jpeg',
       );
-      console.log(croppedImageUrl);
+      this.setState({
+        cropSrc: croppedImageUrl,
+      });
     }
   }
+
+  setNewImage = () => {
+    const { cropSrc } = this.state;
+    this.props.updateCropSrc(cropSrc);
+    this.setState({ src: null });
+  };
 
   getCroppedImg(image, crop, fileName) {
     const canvas = document.createElement('canvas');
@@ -88,6 +97,7 @@ class ImageCrop extends PureComponent {
       <>
         {!src && (
           <div>
+            <Square></Square>
             <UploadBtn htmlFor="ex_file">Upload a photo...</UploadBtn>
             <input
               style={{ display: 'none' }}
@@ -101,26 +111,30 @@ class ImageCrop extends PureComponent {
         {!src && <Btn>Remove photo</Btn>}
         <div>
           {src && (
-            <CropContainer>
-              <MainText>Crop your new profile picture</MainText>
-              <div
-                style={{
-                  padding: '0px 11px',
-                }}
-              >
-                <ReactCrop
-                  src={src}
-                  crop={crop}
-                  ruleOfThirds
-                  onImageLoaded={this.onImageLoaded}
-                  onComplete={this.onCropComplete}
-                  onChange={this.onCropChange}
-                />
-              </div>
-              <BtnDiv>
-                <SetButton>set new profile picture</SetButton>
-              </BtnDiv>
-            </CropContainer>
+            <BackGround>
+              <CropContainer>
+                <MainText>Crop your new profile picture</MainText>
+                <div
+                  style={{
+                    padding: '0px 11px',
+                  }}
+                >
+                  <ReactCrop
+                    src={src}
+                    crop={crop}
+                    ruleOfThirds
+                    onImageLoaded={this.onImageLoaded}
+                    onComplete={this.onCropComplete}
+                    onChange={this.onCropChange}
+                  />
+                </div>
+                <BtnDiv>
+                  <SetButton onClick={this.setNewImage}>
+                    set new profile picture
+                  </SetButton>
+                </BtnDiv>
+              </CropContainer>
+            </BackGround>
           )}
           {/* {croppedImageUrl && (
           <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
@@ -130,6 +144,27 @@ class ImageCrop extends PureComponent {
     );
   }
 }
+
+const Square = style.span`
+display: block;
+    height: 8px;
+    width: 8px;
+    background: white;
+    position: absolute;
+    bottom: 57px;
+    border-right: 1px solid #d0d0d0;
+    border-top: 1px solid #d0d0d0;
+    transform: rotateZ(-45deg);
+    right: 107px;
+    `;
+const BackGround = style.div`
+    background: rgba(0,0,0,0.3);
+    position: fixed;
+    height: 100vh;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+`;
 
 const SetButton = style.button`
     border: none;
@@ -155,12 +190,13 @@ background: white;
     display: flex;
     flex-direction: column;
     border-radius: 11px;
-        position: fixed;
+    position: relative;
+    margin: 0 auto;
     top: 50vh;
-    left: 467px;
-    width: 351px;
+    width: 390px;
     height: auto;
         transform: translate(0, -50%);
+        box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.3);
 `;
 
 const MainText = style.span`border-bottom: 1px solid #e6e6e6;

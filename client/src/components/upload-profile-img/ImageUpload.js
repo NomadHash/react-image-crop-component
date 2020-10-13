@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import UploadTab from '../upload-profile-img/UploadTab';
 import defaultAvatar from '../../public/default.png';
@@ -10,9 +11,23 @@ const ImageUpload = () => {
   });
   const [active, setActive] = useState(false);
 
+  const { preview } = useSelector(({ profileUploadReducer }) => ({
+    preview: profileUploadReducer.url,
+  }));
+  useEffect(() => {
+    if (preview) {
+      setAvatar({ ...avatar, default: preview });
+      setActive(!active);
+    }
+  }, [preview]);
+
   const EditHandler = () => {
     setActive(!active);
   };
+
+  const previewImage = (
+    <Preview src={avatar.default} alt="profileImagie"></Preview>
+  );
 
   return (
     <Background>
@@ -24,12 +39,11 @@ const ImageUpload = () => {
         }}
       >
         <H3>Profile picture</H3>
-        <Preview src={avatar.default} alt="profileImagie"></Preview>
+        {previewImage}
         <EditBtn onClick={EditHandler}>
           <RiPencilLine style={{ fontSize: '18px' }} /> Edit
         </EditBtn>
         {active && <UploadTab EditHandler={EditHandler} />}
-        {/* <ImageCropContainer /> */}
       </div>
     </Background>
   );
@@ -86,6 +100,7 @@ const Background = styled.div`
   margin: 0 auto;
   display: flex;
   align-items: center;
+  box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.3);
 `;
 
 export default ImageUpload;
