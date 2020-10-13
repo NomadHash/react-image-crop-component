@@ -15,7 +15,6 @@ class ImageCrop extends PureComponent {
 
   onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      console.log('이미지 업로드');
       this.props.CreateUi();
       const reader = new FileReader();
       reader.addEventListener('load', () =>
@@ -87,26 +86,41 @@ class ImageCrop extends PureComponent {
     const { crop, croppedImageUrl, src } = this.state;
     return (
       <>
-        <div>
-          <UploadBtn htmlFor="ex_file">Upload a photo...</UploadBtn>
-          <input
-            style={{ display: 'none' }}
-            type="file"
-            id="ex_file"
-            accept="image/*"
-            onChange={this.onSelectFile}
-          ></input>
-        </div>
+        {!src && (
+          <div>
+            <UploadBtn htmlFor="ex_file">Upload a photo...</UploadBtn>
+            <input
+              style={{ display: 'none' }}
+              type="file"
+              id="ex_file"
+              accept="image/*"
+              onChange={this.onSelectFile}
+            ></input>
+          </div>
+        )}
+        {!src && <Btn>Remove photo</Btn>}
         <div>
           {src && (
-            <ReactCrop
-              src={src}
-              crop={crop}
-              ruleOfThirds
-              onImageLoaded={this.onImageLoaded}
-              onComplete={this.onCropComplete}
-              onChange={this.onCropChange}
-            />
+            <CropContainer>
+              <MainText>Crop your new profile picture</MainText>
+              <div
+                style={{
+                  padding: '0px 11px',
+                }}
+              >
+                <ReactCrop
+                  src={src}
+                  crop={crop}
+                  ruleOfThirds
+                  onImageLoaded={this.onImageLoaded}
+                  onComplete={this.onCropComplete}
+                  onChange={this.onCropChange}
+                />
+              </div>
+              <BtnDiv>
+                <SetButton>set new profile picture</SetButton>
+              </BtnDiv>
+            </CropContainer>
           )}
           {/* {croppedImageUrl && (
           <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
@@ -117,6 +131,49 @@ class ImageCrop extends PureComponent {
   }
 }
 
+const SetButton = style.button`
+    border: none;
+    color: white;
+        background: #2C974B;
+    border-radius: 6px;
+    border-radius: 3px;
+    width: 93%;
+    padding: 7px 10px;
+    font-weight: 600;
+    font-size: 14px;
+    `;
+const BtnDiv = style.div`
+   margin-top: 9px;
+    padding: 11px 0px;
+    text-align: center;
+    background: #f1f0f0;
+    border-radius: 0px 0px 11px 11px;
+    border-top: 1px solid #d2d2d2`;
+
+const CropContainer = style.div`
+background: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 11px;
+        position: fixed;
+    top: 50vh;
+    left: 467px;
+    width: 351px;
+    height: auto;
+        transform: translate(0, -50%);
+`;
+
+const MainText = style.span`border-bottom: 1px solid #e6e6e6;
+    width: 100%;
+    color: #272727;
+    font-weight: 600;
+    font-size: 14px;
+    background: #f1f1f1;
+    text-align: center;
+    border-radius: 10px 10px 0px 0px;
+    padding: 13px 0px;
+    margin-bottom: 8px;`;
+
 const UploadBtn = style.label`
     font-family: inherit;
     border: none;
@@ -126,7 +183,27 @@ const UploadBtn = style.label`
     text-align: left;
     color: #333333;
     font-size: 14px;
-    padding: 4px 10px;
+    padding: 5px 15px;
+    cursor : pointer;
+   &:hover {
+     background-color: #0064d4;
+      color: white;
+   }
+   &:focus {
+     outline:none;
+   }
+      `;
+const Btn = style.button`
+margin-top: 3px;
+    font-family: inherit;
+    border: none;
+    font-weight: 500;
+    background: none;
+    width: 100%;
+    text-align: left;
+    color: #333333;
+    font-size: 14px;
+    padding: 5px 15px;
     cursor : pointer;
    &:hover {
      background-color: #0064d4;

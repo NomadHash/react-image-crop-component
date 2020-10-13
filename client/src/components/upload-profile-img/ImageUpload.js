@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import UploadTab from '../components/UploadTab';
-import defaultAvatar from '../public/default.png';
+import UploadTab from '../upload-profile-img/UploadTab';
+import defaultAvatar from '../../public/default.png';
 import { RiPencilLine } from 'react-icons/ri';
 
 const ImageUpload = () => {
