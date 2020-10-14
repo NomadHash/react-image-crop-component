@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import UploadTab from '../upload-profile-img/UploadTab';
+import UploadTabContainer from '../../components/upload-profile-img/UploadTab';
 import defaultAvatar from '../../public/default.png';
 import { RiPencilLine } from 'react-icons/ri';
 
-const ImageUpload = () => {
+const ImageUploadContainer = () => {
   const [avatar, setAvatar] = useState({
     default: defaultAvatar,
   });
@@ -43,7 +43,7 @@ const ImageUpload = () => {
         <EditBtn onClick={EditHandler}>
           <RiPencilLine style={{ fontSize: '18px' }} /> Edit
         </EditBtn>
-        {active && <UploadTab EditHandler={EditHandler} />}
+        {active && <UploadTabContainer EditHandler={EditHandler} />}
       </div>
     </Background>
   );
@@ -55,7 +55,7 @@ const H3 = styled.h3`
   font-size: 14px;
   font-weight: 600;
   margin: 0px;
-  color: black;
+  color: #212020;
   margin-bottom: 10px;
 `;
 
@@ -103,4 +103,4 @@ const Background = styled.div`
   box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.3);
 `;
 
-export default ImageUpload;
+export default ImageUploadContainer;

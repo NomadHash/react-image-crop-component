@@ -1,13 +1,30 @@
-import React from 'react';
 import style from 'styled-components';
 import onClickOutside from 'react-onclickoutside';
-import ImageCropContainer from '../../container/upload-profile-image/ImageCropContainer';
+
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import ImageCrop from './ImageCrop';
+import { uploadState } from '../../modules/profileImageUpload';
 
 function UploadTab({ EditHandler }) {
   UploadTab.handleClickOutside = () => EditHandler();
+
+  const [cropSrc, setCropSrc] = useState();
+
+  const dispatch = useDispatch();
+  const updateCropSrc = (src) => {
+    setCropSrc(src);
+  };
+
+  useEffect(() => {
+    if (cropSrc !== undefined) dispatch(uploadState(cropSrc));
+  }, [dispatch, cropSrc]);
+
   return (
     <ButtonList>
-      <ImageCropContainer />
+      <div>
+        <ImageCrop updateCropSrc={updateCropSrc} />
+      </div>
     </ButtonList>
   );
 }

@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom';
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import style from 'styled-components';
@@ -16,7 +15,6 @@ class ImageCrop extends PureComponent {
 
   onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      this.props.CreateUi();
       const reader = new FileReader();
       reader.addEventListener('load', () =>
         this.setState({ src: reader.result }),
@@ -79,7 +77,6 @@ class ImageCrop extends PureComponent {
     return new Promise((resolve, reject) => {
       canvas.toBlob((blob) => {
         if (!blob) {
-          //reject(new Error('Canvas is empty'));
           console.error('Canvas is empty');
           return;
         }
@@ -92,7 +89,7 @@ class ImageCrop extends PureComponent {
   }
 
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const { crop, src } = this.state;
     return (
       <>
         {!src && (
@@ -113,7 +110,9 @@ class ImageCrop extends PureComponent {
           {src && (
             <BackGround>
               <CropContainer>
-                <MainText>Crop your new profile picture</MainText>
+                <MainTextSpan>
+                  <MainTextH3>Crop your new profile picture</MainTextH3>
+                </MainTextSpan>
                 <div
                   style={{
                     padding: '0px 11px',
@@ -130,15 +129,12 @@ class ImageCrop extends PureComponent {
                 </div>
                 <BtnDiv>
                   <SetButton onClick={this.setNewImage}>
-                    set new profile picture
+                    Set new profile picture
                   </SetButton>
                 </BtnDiv>
               </CropContainer>
             </BackGround>
           )}
-          {/* {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
-        )} */}
         </div>
       </>
     );
@@ -169,13 +165,17 @@ const BackGround = style.div`
 const SetButton = style.button`
     border: none;
     color: white;
-        background: #2C974B;
+    background: #2C974B;
     border-radius: 6px;
     border-radius: 3px;
     width: 93%;
     padding: 7px 10px;
     font-weight: 600;
     font-size: 14px;
+     &:focus {
+     outline:none;
+   }
+    cursor : pointer;
     `;
 const BtnDiv = style.div`
    margin-top: 9px;
@@ -195,20 +195,25 @@ background: white;
     top: 50vh;
     width: 390px;
     height: auto;
-        transform: translate(0, -50%);
-        box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.3);
+    transform: translate(0, -50%);
+    box-shadow: 0px 6px 9px rgba(0, 0, 0, 0.3);
 `;
 
-const MainText = style.span`border-bottom: 1px solid #e6e6e6;
-    width: 100%;
+const MainTextSpan = style.span`
+    border-bottom: 1px solid #e6e6e6;
     color: #272727;
     font-weight: 600;
-    font-size: 14px;
     background: #f1f1f1;
-    text-align: center;
     border-radius: 10px 10px 0px 0px;
     padding: 13px 0px;
     margin-bottom: 8px;`;
+
+const MainTextH3 = style.span`
+    margin: 4px;
+    text-align: start;
+    margin-left: 15px;
+    font-size: 14px;
+    `;
 
 const UploadBtn = style.label`
     font-family: inherit;
