@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import UploadTabContainer from '../../components/upload-profile-img/UploadTab';
+import UploadTab from '../../components/upload-profile-img/UploadTab';
 import defaultAvatar from '../../public/default.png';
 import { RiPencilLine } from 'react-icons/ri';
 
@@ -43,7 +43,7 @@ const ImageUploadContainer = () => {
         <EditBtn onClick={EditHandler}>
           <RiPencilLine style={{ fontSize: '18px' }} /> Edit
         </EditBtn>
-        {active && <UploadTabContainer EditHandler={EditHandler} />}
+        {active && <UploadTab EditHandler={EditHandler} />}
       </div>
     </Background>
   );
